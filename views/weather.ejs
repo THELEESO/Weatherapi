@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= dJson.name %> - (<%= dJson.sys.country %>)</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
+    <h1><%= dJson.name %> Weather Now</h1>
+    <table>
+      <tr>
+        <th>Weather Status</th>
+        <td><%= dJson.weather[0].main %></td>
+      </tr>
+      <tr>
+        <th>Descriptions</th>
+        <td><%= dJson.weather[0].description %></td>
+      </tr>
+      <tr>
+        <th>Temperature</th>
+        <td><%= newTemp %></td>
+      </tr>
+    </table>
+  </body>
+</html>
