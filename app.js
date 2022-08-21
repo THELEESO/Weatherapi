@@ -5,7 +5,7 @@ const https = require("https");
 const { json } = require("express");
 
 // api key
-const myKey = "c3ad7ea06f15275931cdc23a18a83767";
+const myKey = "";
 
 // K to cel
 function ktoC(k) {
