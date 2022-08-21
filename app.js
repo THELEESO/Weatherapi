@@ -3,6 +3,7 @@ const app = express();
 const ejs = require("ejs");
 const https = require("https");
 const { json } = require("express");
+const fetch = require("node-fetch");
 
 // api key
 const myKey = "";
@@ -19,26 +20,27 @@ app.set("view engine", "ejs");
 app.get("/", (req, res) => {
   res.render("index.ejs");
 });
-
-app.get("/:city", (req, res) => {
+// .then
+// app.get("/:city", (req, res) => {
+//   let { city } = req.params;
+//   let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${myKey}`;
+//   fetch(url)
+//     .then((d) => d.json())
+//     .then((dJson) => {
+//       let { temp } = dJson.main;
+//       let newTemp = ktoC(temp);
+//       res.render("weather.ejs", { dJson, newTemp });
+//     });
+// });
+// async
+app.get("/:city", async (req, res) => {
   let { city } = req.params;
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${myKey}`;
-
-  // get request made by node.js
-  https
-    .get(url, (response) => {
-      console.log("statusCode:", response.statusCode);
-      console.log("headers:", response.headers);
-      response.on("data", (d) => {
-        let dJson = JSON.parse(d); //sync function 不用 async
-        let { temp } = dJson.main;
-        let newTemp = ktoC(temp);
-        res.render("weather.ejs", { dJson, newTemp });
-      });
-    })
-    .on("error", (e) => {
-      console.log(e);
-    });
+  let data = await fetch(url);
+  let dJson = await data.json();
+  let { temp } = dJson.main;
+  let newTemp = ktoC(temp);
+  res.render("weather.ejs", { dJson, newTemp });
 });
 
 app.listen(3000, () => {
